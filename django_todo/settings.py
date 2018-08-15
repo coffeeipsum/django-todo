@@ -13,6 +13,13 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 import dj_database_url   #added!
 
+# NEW: to set a development envir in addition to Production!
+if os.environ.get('DEVELOPMENT'):
+    development = True
+else:
+    development = False
+    
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +32,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'o_61uys39188wzmqw97b57km(ljhq#!6*4&4y719##7i-4ucyv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = development   #NEW
 
 
 # This allows pushes from C9 to Github and Herku parallel
@@ -84,6 +92,18 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+if development:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+    DATABASES = {'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))}
+
+
+
 # Ah NOTE: I commented out this default database and will add my Heroku Postgres one
 #DATABASES = {
 #    'default': {
@@ -92,13 +112,12 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 #    }
 #}
 
-
 # Annies Postgres db connection string
 #DATABASES = {'default': dj_database_url.parse("postgres://idtlwtdxmdxhuz:62d01ecfd1ffa70045065a684538c2611069a6b255f05eaaac237d53c5cf9668@ec2-54-217-235-137.eu-west-1.compute.amazonaws.com:5432/d59fjp454e1ub0")}
 
 
 # NEW: Automated connection to DB
-DATABASES = {'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))}
+#DATABASES = {'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))}
 
 
 
