@@ -26,3 +26,15 @@ python3 manage.py createsuperuser
 To avoid typing the commands `.headers` on and `.mode column` we can create a
 new file called `.sqliterc` under FAVORITES > workspace
 
+
+# HTML Coverage
+sudo pip3 install coverage
+
+coverage run manage.py test
+
+coverage report
+
+- OR -
+coverage run --source=todo manage.py test
+(then)
+coverage report

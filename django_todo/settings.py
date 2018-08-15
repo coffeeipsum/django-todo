@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import dj_database_url   #added!
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -74,12 +76,17 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# NOTE: I commented out this default database and will add my Heroku Postgres one
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
+
+
+# Annies Postgres db
+DATABASES = {'default': dj_database_url.parse("postgres://idtlwtdxmdxhuz:62d01ecfd1ffa70045065a684538c2611069a6b255f05eaaac237d53c5cf9668@ec2-54-217-235-137.eu-west-1.compute.amazonaws.com:5432/d59fjp454e1ub0")}
 
 
 # Password validation
