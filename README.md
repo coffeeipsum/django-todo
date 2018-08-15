@@ -38,3 +38,9 @@ coverage report
 coverage run --source=todo manage.py test
 (then)
 coverage report
+
+# SECRET_KEY
+https://www.miniwebtool.com/django-secret-key-generator/
+
+Remove it from settings.py and put a newly generated one into .bashrc
+export SECRET_KEY="secretsecretsupersecret"
