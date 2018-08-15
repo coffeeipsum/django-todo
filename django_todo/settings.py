@@ -27,8 +27,15 @@ SECRET_KEY = 'o_61uys39188wzmqw97b57km(ljhq#!6*4&4y719##7i-4ucyv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-todo-coffeeipsum.c9users.io',
-                'annies-django-todo.herokuapp.com']
+
+# This allows pushes from C9 to Github and Herku parallel
+ALLOWED_HOSTS = [os.environ.get('C9_HOSTNAME'),
+                os.environ.get('HOSTNAME')]
+
+                
+# This was the previous version which worked fine!
+#ALLOWED_HOSTS = ['django-todo-coffeeipsum.c9users.io',
+#                'annies-django-todo.herokuapp.com']
 
 
 # Application definition
@@ -77,7 +84,7 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-# NOTE: I commented out this default database and will add my Heroku Postgres one
+# Ah NOTE: I commented out this default database and will add my Heroku Postgres one
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
@@ -86,8 +93,13 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 #}
 
 
-# Annies Postgres db
-DATABASES = {'default': dj_database_url.parse("postgres://idtlwtdxmdxhuz:62d01ecfd1ffa70045065a684538c2611069a6b255f05eaaac237d53c5cf9668@ec2-54-217-235-137.eu-west-1.compute.amazonaws.com:5432/d59fjp454e1ub0")}
+# Annies Postgres db connection string
+#DATABASES = {'default': dj_database_url.parse("postgres://idtlwtdxmdxhuz:62d01ecfd1ffa70045065a684538c2611069a6b255f05eaaac237d53c5cf9668@ec2-54-217-235-137.eu-west-1.compute.amazonaws.com:5432/d59fjp454e1ub0")}
+
+
+# NEW: Automated connection to DB
+DATABASES = {'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))}
+
 
 
 # Password validation
